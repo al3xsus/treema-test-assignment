@@ -1,4 +1,6 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+import path from "path";
+
 import Koa from "koa";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
@@ -10,7 +12,9 @@ import { TodoModel } from "./models/Todo";
 const app = new Koa();
 const router = new Router();
 
-// 1. Connect to MongoDB
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
+
+// DB Connection
 const MONGO_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/todo-db";
 mongoose
@@ -21,9 +25,8 @@ mongoose
 app.use(cors());
 app.use(bodyParser());
 
-// 2. Routes
+// Create
 router.post("/todos", async (ctx) => {
-  // Validate incoming data using Zod
   const result = TodoSchema.safeParse(ctx.request.body);
 
   if (!result.success) {
@@ -32,17 +35,50 @@ router.post("/todos", async (ctx) => {
     return;
   }
 
-  // Save to Database
   const newTodo = await TodoModel.create(result.data);
   ctx.status = 201;
   ctx.body = newTodo;
 });
 
+// Read
 router.get("/todos", async (ctx) => {
   ctx.body = await TodoModel.find().sort({ createdAt: -1 });
 });
 
+// Update
+router.patch("/todos/:id", async (ctx) => {
+  const { id } = ctx.params;
+
+  const result = TodoSchema.partial().safeParse(ctx.request.body);
+
+  if (!result.success) {
+    ctx.status = 400;
+    ctx.body = { error: result.error.format() };
+    return;
+  }
+
+  // Check for empty or whitespace title
+  if (result.data.title !== undefined && result.data.title.trim() === "") {
+    ctx.status = 400;
+    ctx.body = { error: "Title cannot be empty" };
+    return;
+  }
+
+  const updatedTodo = await TodoModel.findByIdAndUpdate(id, result.data, {
+    new: true,
+  });
+
+  ctx.body = updatedTodo;
+});
+
+// Delete
+router.delete("/todos/:id", async (ctx) => {
+  const { id } = ctx.params;
+  await TodoModel.findByIdAndDelete(id);
+  ctx.status = 204;
+});
+
 app.use(router.routes()).use(router.allowedMethods());
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server on http://localhost:${PORT}`));
+const PORT = process.env.SERVER_PORT || 3000;
+app.listen(PORT, () => console.log(`🤖 Server on http://localhost:${PORT}`));

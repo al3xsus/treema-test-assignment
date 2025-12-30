@@ -6,9 +6,9 @@ export const TodoSchema = z.object({
 });
 
 export type Todo = z.infer<typeof TodoSchema> & {
-  id: string; // No 'readonly'
+  id: string;
   createdAt: Date;
   updatedAt: Date;
-  _id?: any; // Optional so it can be deleted
-  __v?: any; // Optional so it can be deleted
+  _id?: string;
+  __v?: string;
 };
