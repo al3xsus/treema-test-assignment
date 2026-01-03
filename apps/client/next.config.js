@@ -1,7 +1,10 @@
-/** @type {import('next').nextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-    // This tells Next.js to compile the Shared package as part of the client build
-    transpilePackages: ["@treema-todo-assignment/shared"],
-  };
-  
-  export default nextConfig;
+  transpilePackages: ["@treema-todo-assignment/shared"],
+  // This helps if you have issues with strict ESM resolution on Render
+  typescript: {
+    ignoreBuildErrors: false, 
+  }
+};
+
+export default nextConfig;
