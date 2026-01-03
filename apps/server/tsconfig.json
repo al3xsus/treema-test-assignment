@@ -1,13 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "ESNext",
+    /* The Fix: These two must match */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
     "outDir": "./dist",
     "rootDir": "./src",
-    "target": "ESNext",
-    "module": "CommonJS",
+
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"],
   "references": [
