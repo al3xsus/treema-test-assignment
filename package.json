@@ -13,7 +13,7 @@
     "dev:server": "npm run dev -w @treema-todo-assignment/server",
     "dev:client": "npm run dev -w @treema-todo-assignment/client",
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"magenta,cyan\" \"npm run dev:server\" \"npm run dev:client\"",
-    "install:all": "npm install"
+    "install": "npm install"
   },
   "keywords": [],
   "author": "",
