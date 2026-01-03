@@ -26,7 +26,7 @@ app.use(cors());
 app.use(bodyParser());
 
 // Create
-router.post("/todos", async (ctx: Context) => {
+router.post("/todos", async (ctx: Context, next: Next) => {
   const result = TodoSchema.safeParse(ctx.request.body);
 
   if (!result.success) {
@@ -41,12 +41,12 @@ router.post("/todos", async (ctx: Context) => {
 });
 
 // Read
-router.get("/todos", async (ctx) => {
+router.get("/todos", async (ctx: Context, next: Next) => {
   ctx.body = await TodoModel.find().sort({ createdAt: -1 });
 });
 
 // Update
-router.patch("/todos/:id", async (ctx) => {
+router.patch("/todos/:id", async (ctx: Context, next: Next) => {
   const { id } = ctx.params;
 
   const result = TodoSchema.partial().safeParse(ctx.request.body);
@@ -72,13 +72,23 @@ router.patch("/todos/:id", async (ctx) => {
 });
 
 // Delete
-router.delete("/todos/:id", async (ctx) => {
+router.delete("/todos/:id", async (ctx: Context, next: Next) => {
   const { id } = ctx.params;
   await TodoModel.findByIdAndDelete(id);
   ctx.status = 204;
 });
 
 app.use(router.routes()).use(router.allowedMethods());
+
+app.use(async (ctx: Context, next: Next) => {
+  try {
+    await next();
+  } catch (err: any) {
+    // Type the error as any or Error
+    ctx.status = err.status || 500;
+    ctx.body = { message: err.message };
+  }
+});
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(PORT, () => console.log(`🤖 Server on http://localhost:${PORT}`));
