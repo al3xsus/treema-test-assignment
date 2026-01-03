@@ -3,8 +3,11 @@
     "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "declaration": true,       /* Essential: creates .d.ts files */
-    "declarationMap": true,    /* Helps with debugging */
+    /* Add these two lines */
+    "baseUrl": ".",
+    "paths": { "*": ["../../node_modules/*"] },
+    
+    "declaration": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
