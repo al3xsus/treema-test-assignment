@@ -38,3 +38,11 @@ Create a `.env.local` file in the **apps/client** (refer to `apps/client/.env.ex
 ### 4. Start
 
 npm run dev
+
+---
+
+Production-ready (Render-tailored) code can be accessed in `render` branch.
+
+Server Endpoint: https://treema-test-assignment.onrender.com
+
+Client endpoint: https://treema-test-assignment-client.onrender.com
