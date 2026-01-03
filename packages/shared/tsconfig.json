@@ -3,16 +3,14 @@
     "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    /* Add these two lines */
-    "baseUrl": ".",
-    "paths": { "*": ["../../node_modules/*"] },
-    
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    /* This ensures it uses the root's knowledge of node_modules */
+    "typeRoots": ["../../node_modules/@types", "node_modules/@types"]
   },
   "include": ["src/**/*"]
 }
