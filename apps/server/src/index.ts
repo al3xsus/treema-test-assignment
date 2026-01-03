@@ -78,6 +78,17 @@ router.delete("/todos/:id", async (ctx: Context, next: Next) => {
   ctx.status = 204;
 });
 
+// Healthcheck
+router.get("/", async (ctx: Context) => {
+  ctx.status = 200;
+  ctx.body = {
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(), // shows how many seconds the server has been running
+    environment: process.env.NODE_ENV || "development",
+  };
+});
+
 app.use(router.routes()).use(router.allowedMethods());
 
 app.use(async (ctx: Context, next: Next) => {
