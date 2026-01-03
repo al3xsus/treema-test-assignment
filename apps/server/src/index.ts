@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
 
-import Koa from "koa";
+import Koa, { Context, Next } from "koa";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
@@ -26,7 +26,7 @@ app.use(cors());
 app.use(bodyParser());
 
 // Create
-router.post("/todos", async (ctx) => {
+router.post("/todos", async (ctx: Context) => {
   const result = TodoSchema.safeParse(ctx.request.body);
 
   if (!result.success) {
