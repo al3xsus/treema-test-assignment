@@ -7,8 +7,8 @@ export const TodoSchema = z.object({
 
 export type Todo = z.infer<typeof TodoSchema> & {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string | Date;
+  updatedAt: string | Date;
   _id?: string;
   __v?: string;
 };
