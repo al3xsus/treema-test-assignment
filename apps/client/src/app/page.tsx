@@ -91,13 +91,14 @@ export default function TodoPage() {
     }
   };
 
-  // Helper to format date to local string
-  const formatDate = (dateStr?: string) => {
-    if (!dateStr) return "-";
-    return new Date(dateStr).toLocaleString(undefined, {
-      dateStyle: "short",
-      timeStyle: "short",
-    });
+  // format date to local string
+  const formatDate = (dateStr?: string | Date | undefined) => {
+    if (!dateStr) return "N/A";
+
+    // Convert to a Date object safely regardless of input type
+    const d = typeof dateStr === "string" ? new Date(dateStr) : dateStr;
+
+    return d.toLocaleDateString();
   };
 
   if (loading)
