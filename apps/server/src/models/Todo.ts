@@ -17,8 +17,8 @@ const todoSchema = new Schema<Todo>(
       //   };
       // },
       // Inside your transform function
-      transform: (doc, ret) => {
-        ret.id = ret._id.toString(); // Cast to string explicitly
+      transform: (_doc, ret: Partial<{ _id: any; __v: any; id: string }>) => {
+        ret.id = ret._id?.toString();
         delete ret._id;
         delete ret.__v;
       },
