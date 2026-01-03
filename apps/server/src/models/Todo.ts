@@ -9,12 +9,18 @@ const todoSchema = new Schema<Todo>(
   {
     timestamps: true,
     toJSON: {
+      // transform: (doc, ret) => {
+      //   const { _id, __v, ...rest } = ret;
+      //   return {
+      //     ...rest, // Spread the data first
+      //     id: _id.toString(), // Overwrite or set the 'id' last
+      //   };
+      // },
+      // Inside your transform function
       transform: (doc, ret) => {
-        const { _id, __v, ...rest } = ret;
-        return {
-          ...rest, // Spread the data first
-          id: _id.toString(), // Overwrite or set the 'id' last
-        };
+        ret.id = ret._id.toString(); // Cast to string explicitly
+        delete ret._id;
+        delete ret.__v;
       },
     },
   }

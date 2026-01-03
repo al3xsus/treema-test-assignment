@@ -1,11 +1,9 @@
 {
 "name": "@treema-todo-assignment/shared",
   "version": "1.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo 'Shared package ready'"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +11,9 @@
   "description": "",
   "dependencies": {
     "zod": "^4.2.1"
-  }
+  },
+
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts"
 }
