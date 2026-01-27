@@ -42,9 +42,3 @@ npm run dev
 ---
 
 Production-ready (Render-tailored) code can be accessed in `render` branch.
-
-Server Endpoint: https://treema-test-assignment.onrender.com
-
-Client endpoint: https://treema-test-assignment-client.onrender.com
-
-Both are deployed on Free tier instances, so pleaste take a time, before they wake up from _sleeping_.
